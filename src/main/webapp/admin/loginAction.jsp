@@ -12,6 +12,9 @@
 	isValid = userDao.verifyLogin(admin_id, admin_pw);
 	
 	if(isValid) { // 로그인 성공시
+		session.setAttribute("admin_id", admin_id);
+		session.setAttribute("admin_pw", admin_pw);
+		
 		response.sendRedirect("/cashbook/category/categoryList.jsp"); 	
 	} else { // 로그인 실패시
 		response.sendRedirect("/cashbook/admin/loginForm.jsp?error=incorrect");
