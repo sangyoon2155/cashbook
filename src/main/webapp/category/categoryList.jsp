@@ -1,19 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import= "java.sql.*" %>
+<%@ page import= "java.util.*" %>
+<%@ page import= "model.*" %>
+<%@ page import= "dto.*" %>
 <% 
-	/*PreparedStatement stmt = null;
-	ResultSet rs = null;
 	
-	String sql = ""; // cash + category 조인한 값 
-	Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cashbook", "root", "java1234");
-    stmt = conn.prepareStatement(sql); */
-
 	String ID = (String)(session.getAttribute("admin_id"));
 	
 	if(ID == null){ // 로그아웃 상태 일때
 		response.sendRedirect("/cashbook/admin/loginForm.jsp");
 		return;
+	}
+	
+	CategoryDao categoryDao = new CategoryDao();
+	ArrayList<Category>list = new ArrayList<>();
+	try {
+		list = categoryDao.CategoryList(); // 실제 데이터 가져오기
+	} catch (ClassNotFoundException | SQLException e) {
+		e.printStackTrace();
+		out.println("데이터를 가져오는 데 실패했습니다.");
 	}
 %>
 <!DOCTYPE html>
@@ -36,21 +41,22 @@
 		</tr>
 
 		<%
-			//while(rs.next()) {
+			for(Category category : list) {
+				Cash cash = category.getCash();
 		%>
-				<!--
+				
 				<tr>
+					<td><%=cash.getCash_date()%></td>
+					<td><%=category.getKind()%></td>
+					<td><%=category.getTitle()%></td>
+					<td><%=cash.getMemo()%></td>
+					<td><%=cash.getAmount()%></td>
 					<td></td>
-					<td>></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><a href="/cashbook/category/deleteCategory.jsp">삭제</a></td>
 				</tr>
-				-->
+				
 		<% 
-			//}
+			}
 		%>
 
 	</table>

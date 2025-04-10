@@ -5,6 +5,9 @@ public class Category {
 	private String kind;
 	private String title;
 	private String createdate;
+	
+	private Cash cash;
+	
 	public int getCategory_no() {
 		return category_no;
 	}
@@ -29,10 +32,16 @@ public class Category {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
+	public Cash getCash() {
+        return cash;
+    }
+    public void setCash(Cash cash) {
+        this.cash = cash;
+    }
 	@Override
 	public String toString() {
 		return "Category [category_no=" + category_no + ", kind=" + kind + ", title=" + title + ", createdate="
-				+ createdate + "]";
+				+ createdate + ", cash=" + cash + "]";
 	}
 	
 }
